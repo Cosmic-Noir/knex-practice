@@ -6,14 +6,16 @@ const knexInstance = knex({
   connection: process.env.DB_URL
 });
 
-const searchTerm = "holo";
+function searchByProduceName(searchTerm) {
+  knexInstance
+    .select("product_id", "name", "price", "category")
+    .from("amazong_products")
+    .where("name", "ILIKE", `%${searchTerm}%`)
+    .then(result => {
+      console.log(result);
+    });
+}
 
-knexInstance
-  .select("product_id", "name", "price", "category")
-  .from("amazong_products")
-  .where("name", "ILIKE", `%${searchTerm}%`)
-  .then(result => {
-    console.log(result);
-  });
+searchByProduceName("holo");
 
 // console.log("knex and driver installed correctly");
