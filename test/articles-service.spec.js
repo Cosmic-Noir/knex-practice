@@ -35,11 +35,13 @@ describe(`Articles service object`, () => {
   });
   after(() => db.destroy());
   before(() => db("blogful_articles").truncate());
-  before(() => {
-    return db.into("blogful_articles").insert(testArticles);
-  });
-  describe(`getAllArticles()`, () => {
-    it(`resolves all articles from 'blogful_articles' table`, () => {
+  afterEach(() => db("blogful_articles").truncate());
+
+  context(`Given 'blogful_articles' has data`, () => {
+    before(() => {
+      return db.into("blogful_articles").insert(testArticles);
+    });
+    it(`getAllArticles() resolves all artciles from 'blogful_articles' table`, () => {
       // test that ArticlesService.getAllArticles gets data from table
       return ArticlesService.getAllArticles(db).then(actual => {
         expect(actual).to.eql(
@@ -48,6 +50,14 @@ describe(`Articles service object`, () => {
             date_published: new Date(article.date_published)
           }))
         );
+      });
+    });
+  });
+
+  context(`Given 'blogful_articles' has no data`, () => {
+    it(`getAllArticles() resolves an empty array`, () => {
+      return ArticlesService.getAllArticles(db).then(actual => {
+        expect(actual).to.eql([]);
       });
     });
   });
