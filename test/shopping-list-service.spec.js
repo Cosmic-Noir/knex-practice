@@ -86,6 +86,16 @@ describe(`ShoppingList service object`, () => {
           });
         });
     });
+
+    it(`deleteItem() removes an item by id from 'shoppping_list' table`, () => {
+      const itemId = 3;
+      return ShoppingListService.deleteItem(db, itemId)
+        .then(() => ShoppingListService.getAllProducts(db))
+        .then(allItems => {
+          const expected = testItems.filter(item => item.id !== itemId);
+          expect(allItems).to.eql(expected);
+        });
+    });
   });
 
   context(`Given 'shopping_list' has no data`, () => {
