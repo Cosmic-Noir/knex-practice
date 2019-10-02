@@ -31,4 +31,33 @@ function paginateProducts(page) {
     });
 }
 
-paginateProducts(2);
+// paginateProducts(2);
+
+function addedAfterDate(daysAgo) {
+  knexInstance
+    .select("id", "name", "price", "category", "date_added")
+    .from("shopping_list")
+    .where(
+      "date_added",
+      ">",
+      knexInstance.raw(`now() - '?? days'::INTERVAL`, daysAgo)
+    )
+    .then(result => {
+      console.log(result);
+    });
+}
+
+// addedAfterDate(7);
+
+function costPerCategory() {
+  knexInstance
+    .select("category")
+    .sum("price as total")
+    .from("shopping_list")
+    .groupBy("category")
+    .then(result => {
+      console.log(result);
+    });
+}
+
+costPerCategory();
