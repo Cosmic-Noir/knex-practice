@@ -6,9 +6,12 @@ const knexInstance = knex({
   connection: process.env.DB_URL
 });
 
+const searchTerm = "holo";
+
 knexInstance
+  .select("product_id", "name", "price", "category")
   .from("amazong_products")
-  .select("*")
+  .where("name", "ILIKE", `%${searchTerm}%`)
   .then(result => {
     console.log(result);
   });
