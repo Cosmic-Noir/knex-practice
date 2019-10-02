@@ -45,10 +45,26 @@ describe(`ShoppingList service object`, () => {
     beforeEach(() => {
       return db.into("shopping_list").insert(testItems);
     });
+
     it(`getAllProducts() resolves all products from 'shopping_list' table`, () => {
       // test that ShoppingListService.getAllProducts() gets all data from table
       return ShoppingListService.getAllProducts(db).then(actual => {
         expect(actual).to.eql(testItems);
+      });
+    });
+
+    it(`getById() resolves an item by id from 'shopping_list' table`, () => {
+      const thirdId = 3;
+      const thirdTestItem = testItems[thirdId - 1];
+      return ShoppingListService.getById(db, thirdId).then(actual => {
+        expect(actual).to.eql({
+          id: thirdId,
+          name: thirdTestItem.name,
+          price: thirdTestItem.price,
+          date_added: thirdTestItem.date_added,
+          category: thirdTestItem.category,
+          checked: false
+        });
       });
     });
   });
