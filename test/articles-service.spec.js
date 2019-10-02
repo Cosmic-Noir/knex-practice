@@ -60,5 +60,14 @@ describe(`Articles service object`, () => {
         expect(actual).to.eql([]);
       });
     });
+
+    it(`insertArticle() inserts a new article and resolves the new article with an 'id'`, () => {
+      const newArticle = {
+        title: "Test new title",
+        content: "Test new content",
+        date_published: new Date("2020-01-01T00:00:00.000Z")
+      };
+      return ArticlesService.insertArticle(db, newArticle);
+    });
   });
 });
