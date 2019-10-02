@@ -52,4 +52,26 @@ describe(`ShoppingList service object`, () => {
       });
     });
   });
+
+  context(`Given 'shopping_list' has no data`, () => {
+    it(`insertItem() inserts a new item and resolves the new item with an 'id'`, () => {
+      const newItem = {
+        name: "New test product",
+        price: 11,
+        date_added: new Date("2029-01-22T16:28:32.615Z"),
+        category: "Lunch",
+        checked: false
+      };
+      return ShoppingListService.insertItem(db, newItem).then(actual => {
+        expect(actual).to.eql({
+          id: 1,
+          name: newItem.name,
+          price: newItem.price,
+          date_added: new Date(newItem.date_added),
+          category: newItem.category,
+          checked: false
+        });
+      });
+    });
+  });
 });
