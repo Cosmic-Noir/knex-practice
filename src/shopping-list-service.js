@@ -17,6 +17,11 @@ const ShoppingListService = {
       .select("*")
       .where("id", id)
       .first();
+  },
+  updateItem(knex, id, newItemData) {
+    return knex("shopping_list")
+      .where({ id })
+      .update(newItemData);
   }
 };
 
