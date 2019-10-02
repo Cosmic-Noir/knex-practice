@@ -17,6 +17,11 @@ const ArticlesService = {
       .select("*")
       .where("id", id)
       .first();
+  },
+  deleteArticle(knex, id) {
+    return knex("blogful_articles")
+      .where({ id })
+      .delete();
   }
 };
 module.exports = ArticlesService;

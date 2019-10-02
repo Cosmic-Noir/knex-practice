@@ -65,6 +65,18 @@ describe(`Articles service object`, () => {
         });
       });
     });
+
+    it(`deleteArticle() removes an article by id from 'blogful_articles' table`, () => {
+      const articleId = 3;
+      return ArticlesService.deleteArticle(db, articleId)
+        .then(() => ArticlesService.getAllArticles(db))
+        .then(allArticles => {
+          const expected = testArticles.filter(
+            article => article.id !== articleId
+          );
+          expect(allArticles).to.eql(expected);
+        });
+    });
   });
 
   context(`Given 'blogful_articles' has no data`, () => {
