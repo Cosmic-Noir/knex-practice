@@ -31,6 +31,18 @@ function paginateProducts(page) {
     });
 }
 
-paginateProducts(3);
+// paginateProducts(3);
+
+function getProductsWithImages() {
+  knexInstance
+    .select("product_id", "name", "price", "category", "image")
+    .from("amazong_products")
+    .whereNotNull("image")
+    .then(result => {
+      console.log(result);
+    });
+}
+
+getProductsWithImages();
 
 // console.log("knex and driver installed correctly");
