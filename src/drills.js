@@ -6,13 +6,14 @@ const knexInstance = knex({
   connection: process.env.DB_URL
 });
 
-function getAllProducts() {
+function getSearchTerm(searchTerm) {
   knexInstance
-    .select("*")
+    .select("name")
     .from("shopping_list")
+    .where("name", "ILIKE", `%${searchTerm}%`)
     .then(result => {
       console.log(result);
     });
 }
 
-getAllProducts();
+getSearchTerm("burger");
