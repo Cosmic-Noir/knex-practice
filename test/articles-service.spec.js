@@ -34,9 +34,7 @@ describe(`Articles service object`, () => {
     });
   });
   after(() => db.destroy());
-  before(() => {
-    db("blogful_articles").truncate();
-  });
+  before(() => db("blogful_articles").truncate());
   before(() => {
     return db.into("blogful_articles").insert(testArticles);
   });
